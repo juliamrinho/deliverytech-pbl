@@ -37,18 +37,34 @@
         formulario.addEventListener("submit", async (evento) => {
             evento.preventDefault();
             const quantidade = Number(campo.value);
+        formulario.addEventListener("submit", async (evento) => {
+    evento.preventDefault();
+    const quantidade = Number(campo.value);
 
-            // TODO (Atividade 3): apresentar "Calculando...".
-            // TODO: realizar fetch POST para /api/pedidos/calcular.
-            // TODO: enviar JSON.stringify({ quantidade }) no corpo.
-            // TODO: converter a resposta usando await resposta.json().
-            // TODO: tratar !resposta.ok, exibindo dados.mensagem.
-            // TODO: formatar dados.valorTotal como BRL (pt-BR).
-            // TODO: mostrar o total com resultado.textContent.
-            // TODO: tratar falhas de comunicação com try/catch.
+    resultado.textContent = "Calculando...";
 
-            resultado.textContent = "Integração ainda não implementada para " + quantidade + " kits.";
+    try {
+        const resposta = await fetch("/api/pedidos/calcular", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ quantidade })
         });
+
+        const dados = await resposta.json();
+
+        if (!resposta.ok) {
+            resultado.textContent = dados.mensagem;
+            return;
+        }
+
+        resultado.textContent = Number(dados.valorTotal).toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL"
+        });
+    } catch (erro) {
+        resultado.textContent = "Erro de comunicação com o servidor.";
+    }
+});
     </script>
 </body>
 </html>
