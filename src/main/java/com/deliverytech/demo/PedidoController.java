@@ -30,11 +30,19 @@ public class PedidoController {
 
     @PostMapping("/calcular")
     public ResponseEntity<?> calcular(@RequestBody Pedido pedido) {
-        // TODO (Atividade 2): recuperar a quantidade enviada.
-        // TODO: devolver HTTP 400 para quantidade menor que 1 ou maior que 20.
-        // TODO: multiplicar a quantidade pelo PRECO usando BigDecimal.
-        // TODO: devolver HTTP 200 com Resultado(quantidade, PRECO, total).
+        int quantidade = pedido.quantidade();
 
+        if (quantidade < 1 || quantidade > 20) {
+            return ResponseEntity.badRequest()
+                .body(new Erro ("A quantidade deve estar entre 1 e 20."));
+        }
+
+        BigDecimal total = PRECO.multiply(BigDecimal.valueOf(quantidade));
+
+        return ResponseEntity.ok(
+            new Resultado(Quantidade, PRECO, total)
+            );
+                                
         return ResponseEntity.status(501)
                 .body(new Erro("Funcionalidade ainda não implementada."));
     }
