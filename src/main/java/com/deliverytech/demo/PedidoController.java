@@ -42,4 +42,5 @@ public class PedidoController {
         return ResponseEntity.ok(
             new Resultado(Quantidade, PRECO, total)
             );
-    }
+        }
+}
