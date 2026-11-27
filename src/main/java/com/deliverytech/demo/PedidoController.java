@@ -40,7 +40,7 @@ public class PedidoController {
         BigDecimal total = PRECO.multiply(BigDecimal.valueOf(quantidade));
 
         return ResponseEntity.ok(
-            new Resultado(Quantidade, PRECO, total)
+            new Resultado(quantidade, PRECO, total)
             );
         }
 }
