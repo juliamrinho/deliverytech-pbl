@@ -42,8 +42,4 @@ public class PedidoController {
         return ResponseEntity.ok(
             new Resultado(Quantidade, PRECO, total)
             );
-                                
-        return ResponseEntity.status(501)
-                .body(new Erro("Funcionalidade ainda não implementada."));
     }
-}
